@@ -1,10 +1,10 @@
 {
     "main_color":"#ffffff",
-    "server_id":"server id (for slash cmds)",
-    "auth_token":"auth token",
-    "main_adminroles":["discord role id"],
+    "server_id":"298102003479871488",
+    "auth_token":"MTA2MjgyNjE2MDMxODMyODk1Mg.G1vONQ.IuXRJvsmnUTmD9dcdj4IoLOjlU7UW4nGxUGlxQ",
+    "main_adminroles":["960199533927727144"],
     "prefix":"!ticket ",
-    "languagefile":"english",
+    "languagefile":"spanish",
 
     "credits":true,
     "status":{
@@ -14,13 +14,13 @@
     },
 
     "system":{
-        "ticket_channel":"channel id",
-        "max_allowed_tickets":3,
+        "ticket_channel":"1062848227096940604",
+        "max_allowed_tickets":1,
         "enable_DM_Messages":true,
 
         "has@everyoneaccess":false,
-        "member_role":"member role (doesn't have access to tickets)",
-        "closeMode":"adminonly|normal",
+        "member_role":"667678296460361728",
+        "closeMode":"normal",
 
         "enable_transcript":false,
         "enable_DM_transcript":false,
@@ -31,23 +31,23 @@
 
     "options":[
         {
-            "id":"general",
-            "name":"Question",
-            "description":"Create this ticket if you have a question.",
-            "icon":"🎫",
-            "label":"question",
+            "id":"spanish",
+            "name":"Español",
+            "description":"Asistencia en español.",
+            "icon":"🇪🇸",
+            "label":"Español",
             "type":"ticket",
 
             "color":"gray",
-            "adminroles":["role id"],
-            "channelprefix":"question-",
-            "category":"category id",
-            "message":"You created a ticket!",
+            "adminroles":["960199533927727144","298102471040172032"],
+            "channelprefix":"asistencia-",
+            "category":"1062847821256069120",
+            "message":"¡Has iniciado una solicitud de asistencia en SpainCraft!",
             "enableDmOnOpen":true,
-            "ticketmessage":"The staff will help you soon!\n\n*Click on the button below to close the ticket!*",
+            "ticketmessage":"¡Un miembro del equipo te ayudará lo antes posible!\n\n*Haz click en el botón de abajo para cerrar la solicitud.*",
 
             "thumbnail":{
-                "enable":false,
+                "enable":true,
                 "url":"https://www.example.com/catmemes/cat.png"
             },
 
@@ -58,28 +58,30 @@
             
         },
         {
-            "id":"website",
-            "name":"Website",
-            "description":"Go to our website.",
-            "icon":"✅",
-            "label":"click here",
-            "type":"website",
+            "id":"english",
+            "name":"English",
+            "description":"English support.",
+            "icon":"🇬🇧",
+            "label":"English",
+            "type":"ticket",
 
-            "url":"https://www.dj-dj.be"
-            
-        },
-        {
-            "id":"role",
-            "name":"Verify",
-            "description":"Click here to get the verify role.",
-            "icon":"👮🏼",
-            "label":"get a role",
-            "type":"role",
+            "color":"gray",
+            "adminroles":["960199533927727144","298102471040172032"],
+            "channelprefix":"assistance-",
+            "category":"1062847821256069120",
+            "message":"You created a ticket!",
+            "enableDmOnOpen":true,
+            "ticketmessage":"The staff will help you soon!\n\n*Click on the button below to close the ticket!*",
 
-            "color":"red",
-            "roles":["discord role id"],
-            "mode":"add&remove|remove|add",
-            "enableDmOnOpen":true
+            "thumbnail":{
+                "enable":true,
+                "url":"https://cdn-icons-png.flaticon.com/512/4233/4233834.png"
+            },
+
+            "closedCategory":{
+                "enable":false,
+                "id":"category id"
+            }
             
         }
     ],
@@ -87,24 +89,24 @@
     "messages":[
         {
             "id":"1",
-            "name":"Choose Your Ticket",
-            "description":"You can click one of the buttons below!",
+            "name":"Menú de asistencia",
+            "description":"Por favor, limita las solicitudes de asistencia para cosas importantes.\nPara dudas generales utilice el chat.\n\nAvoid making requests for non important stuff.\n For general help please use regular chat.",
             "dropdown":false,
 
             "enableFooter":false,
             "footer":"Open Ticket v3.1.0 - I'm a footer!",
 
-            "enableThumbnail":false,
-            "thumbnail":"https://www.example.com/catmemes/cat.png",
+            "enableThumbnail":true,
+            "thumbnail":"https://cdn-icons-png.flaticon.com/512/4233/4233834.png",
 
             "enableCustomColor":false,
             "color":"#ffffff",
 
-            "options":["general","apply"],
+            "options":["spanish","english"],
             
             "other":{
                 "enableTicketExplaination":true,
-                "enableMaxTicketsWarning":true,
+                "enableMaxTicketsWarning":false,
                 
                 "customDropdownPlaceholder":{
                     "enable":false,
