@@ -5,7 +5,7 @@ exports.checker = async () => {
     if (process.argv.some((v) => v == "--devconfig")){
         //console.log(chalk.blue("=> used dev config instead of normal config"))
         try{
-            var tempconfig = require("../devConfig.json")
+            var tempconfig = require("../devconfig.json")
         }catch(err){console.log(err);var tempconfig = require("../config.json")}
     }else{
         var tempconfig = require("../config.json")
@@ -114,7 +114,7 @@ exports.checker = async () => {
             })
         }
     }
-    /**@param {String} value @param {"string"|"boolean"|"number"} type */
+    /**@param {String} value @param {"string"|"boolean"|"number"|"array"|"object"} type */
     const checkType = (value,type,path) => {
         if (type == "boolean"){
             if (typeof value != "boolean"){
@@ -127,6 +127,14 @@ exports.checker = async () => {
         }else if (type == "string"){
             if (typeof value != "string"){
                 createError("'"+path+"' | invalid type, this must be a string!")
+            }
+        }else if (type == "array"){
+            if (!Array.isArray(value)){
+                createError("'"+path+"' | invalid type, this must be an array!")
+            }
+        }else if (type == "object"){
+            if (typeof value != "object"){
+                createError("'"+path+"' | invalid type, this must be an object!")
             }
         }
     }
@@ -197,6 +205,7 @@ exports.checker = async () => {
             checkButtonColor(option.color,path+"/color")
 
             //adminroles
+            checkType(option.adminroles,"array",path+"/adminroles")
             checkDiscordArray("roleid",option.adminroles,path+"/adminroles")
             
             //channelprefix
@@ -221,14 +230,30 @@ exports.checker = async () => {
             checkType(option.ticketmessage,"string",path+"/ticketmessage")
 
             //thumbnail
-            checkType(option.thumbnail.enable,"boolean",path/"/thumbnail/enable")
-            checkType(option.thumbnail.url,"string",path/"/thumbnail/url")
+            if (option.thumbnail){
+                checkType(option.thumbnail.enable,"boolean",path+"/thumbnail/enable")
+                checkType(option.thumbnail.url,"string",path+"/thumbnail/url")
+            }else{
+                createError("'"+path+"/thumbnail' | there is no thumbnail object!")
+            }
+
+            //image
+            if (option.image){
+                checkType(option.image.enable,"boolean",path+"/image/enable")
+                checkType(option.image.url,"string",path+"/image/url")
+            }else{
+                createError("'"+path+"/image' | there is no image object!")
+            }
 
             //closedCategory
-            checkType(option.closedCategory.enable,"boolean",path/"/closedCategory/enable")
-            checkType(option.closedCategory.id,"string",path/"/closedCategory/id")
-            if (option.closedCategory.enable){
-                checkDiscord("roleid",option.closedCategory.id,path+"/closedCategory/id")
+            if (option.closedCategory){
+                checkType(option.closedCategory.enable,"boolean",path/"/closedCategory/enable")
+                checkType(option.closedCategory.id,"string",path/"/closedCategory/id")
+                if (option.closedCategory.enable){
+                    checkDiscord("roleid",option.closedCategory.id,path+"/closedCategory/id")
+                }
+            }else{
+                createError("'"+path+"/closedCategory' | there is no closedCategory object!")
             }
 
         }else if (type == "website"){
@@ -368,7 +393,7 @@ exports.checker = async () => {
     //--------------------------|
     //--------------------------|
 
-    var configArray = ["main_color","server_id","auth_token","main_adminroles","prefix","languagefile","credits","status","system","options","messages"]
+    var configArray = ["main_color","server_id","auth_token","main_adminroles","prefix","languagefile","status","system","options","messages"]
     configArray.forEach((item) => {
         if (config[item] == undefined){
             throw new Error("\n\nMAIN ERROR: the item '"+item+"' doesn't exist in config.json")
@@ -380,17 +405,17 @@ exports.checker = async () => {
 
     if (!require("./api/api.json").disable.checkerjs.token) checkToken(config.auth_token)
 
+    checkType(config.main_adminroles,"array","/main_adminroles")
     checkDiscordArray("roleid",config.main_adminroles,"main_adminroles")
     checkString(config.prefix,1,15,"prefix","prefix")
     //languagefile
     checkType(config.languagefile,"string","languagefile")
     const lf = config.languagefile
     
-    if (!lf.startsWith("custom") && !lf.startsWith("english") && !lf.startsWith("dutch") && !lf.startsWith("romanian") && !lf.startsWith("german") && !lf.startsWith("arabic") && !lf.startsWith("spanish") && !lf.startsWith("portuguese") && !lf.startsWith("french") && !lf.startsWith("italian")){
+    if (!lf.startsWith("custom") && !lf.startsWith("english") && !lf.startsWith("dutch") && !lf.startsWith("romanian") && !lf.startsWith("german") && !lf.startsWith("arabic") && !lf.startsWith("spanish") && !lf.startsWith("portuguese") && !lf.startsWith("french") && !lf.startsWith("italian") && !lf.startsWith("czech") && !lf.startsWith("danish") && !lf.startsWith("russian")){
         createError("'languagefile' | invalid language, more info in the wiki")
     }
 
-    checkType(config.credits,"boolean","credits")
     //status:
         checkType(config.status.enabled,"boolean","status/enabled")
         if (config.status.enabled){
@@ -405,30 +430,38 @@ exports.checker = async () => {
 
     
     //system:
+        //ticket channel
         if (config.system.ticket_channel){
             if (config.system.ticket_channel.length < 16 || config.system.ticket_channel.length > 20 || !/^\d+$/.test(config.system.ticket_channel)){
                 createError("'system/ticket_channel' | this channel id is invalid")
             }
         }else createWarn("'"+path+"' | you have no ticket channel selected!")
+
+        //max tickets
         checkType(config.system.max_allowed_tickets,"number","system/max_allowed_tickets")
+
+        //enableDMmessages
         checkType(config.system.enable_DM_Messages,"boolean","system/enable_DM_Messages")
+
+        //has@everyoneaccess
         checkType(config.system["has@everyoneaccess"],"boolean","system/has@everyoneaccess")
+
+        //member_role
+        checkType(config.system.member_role,"string","system/member_role")
         if (config.system.member_role != "" && config.system.member_role != " " && config.system.member_role != "false" && config.system.member_role != "null" && config.system.member_role != "0"){
             checkDiscord("roleid",config.system.member_role,"system/member_role")
         }else{
             createWarn("'system/member_role' | You don't have a member role, but it's recommended!")
         }
+
+        //closemode
         checkType(config.system.closeMode,"string","system/closeMode")
         if (!["normal","adminonly"].includes(config.system.closeMode)){
             createError("'system/closeMode' | the close mode must be adminonly or normal")
         }
 
-        checkType(config.system.enable_transcript,"boolean","system/enable_transcript")
-        checkType(config.system.enable_DM_transcript,"boolean","system/enable_DM_transcript")
-        if (config.system.enable_transcript){
-            checkDiscord("channelid",config.system.transcript_channel,"system/transcript_channel")
-        }
         checkType(config.system.showSlashcmdsInHelp,"boolean","system/showSlashcmdsInHelp")
+        checkType(config.system.answerInEphemeralOnOpen,"boolean","system/answerInEphemeralOnOpen")
 
     //options
 
@@ -441,29 +474,6 @@ exports.checker = async () => {
         checkMessage(message,"messages/"+index)
     })
 
-
-    //discord check
-    /**
-    const discord = require("discord.js")
-    const {GatewayIntentBits,Partials} = discord
-    const client = new discord.Client({
-        intents:[
-            GatewayIntentBits.DirectMessages,
-            GatewayIntentBits.GuildInvites,
-            GatewayIntentBits.GuildMembers,
-            GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.MessageContent
-        ],
-        partials:[Partials.Channel,Partials.Message]
-    })
-    await client.guilds.fetch()
-    if (!client.guilds.cache.find(g => g.id == config.server_id)){
-        createError("'server_id' | i'm not in a server with this id!")
-    }
-    */
-
-    
 
     //the end
     if (errorList.length > 0 || warnList.length > 0){

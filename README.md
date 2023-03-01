@@ -1,59 +1,66 @@
-# Open Ticket
-[![discord](https://img.shields.io/badge/discord-join%20our%20server-5865F2.svg?style=flat-square&logo=discord)](https://discord.com/invite/26vT9wt3n3)  [![version](https://img.shields.io/badge/version-3.1.0-brightgreen.svg?style=flat-square)](https://github.com/DJj123dj/open-ticket/releases/tag/v3.1.0)  [![discord.js](https://img.shields.io/badge/discord.js-v14-CB3837.svg?style=flat-square&logo=npm)]()  [![license](https://img.shields.io/badge/license-GPL%203.0-important.svg?style=flat-square)](https://github.com/DJj123dj/open-ticket/blob/main/LICENSE) [![documentation](https://img.shields.io/badge/documentation-Click%20Here-yellow.svg?style=flat-square)](https://docs.openticket.dj-dj.be)
+<img src="https://www.dj-dj.be/wp-content/uploads/2023/02/open-ticket-cropped.png" alt="Open Ticket" width="600px">
 
-Open ticket is the most configurable open-source ticket bot for discord! Made with the newest technologies. Like: Slash commands, transcripts, multiple ticket types, buttons & dropdowns!
-Start using it now, you can do anything!
+[![discord](https://img.shields.io/badge/discord-join%20our%20server-5865F2.svg?style=flat-square&logo=discord)](https://discord.com/invite/26vT9wt3n3)  [![version](https://img.shields.io/badge/version-3.2.2-brightgreen.svg?style=flat-square)](https://github.com/DJj123dj/open-ticket/releases/tag/v3.2.2)  [![discord.js](https://img.shields.io/badge/discord.js-v14-CB3837.svg?style=flat-square&logo=npm)]()  [![license](https://img.shields.io/badge/license-GPL%203.0-important.svg?style=flat-square)](https://github.com/DJj123dj/open-ticket/blob/main/LICENSE) [![stars](https://img.shields.io/github/stars/djj123dj/open-ticket?color=yellow&label=stars&logo=github&style=flat-square)](https://docs.openticket.dj-dj.be)
 
-*We love to hear suggestions for more features!*
+### Open Ticket
+Open Ticket is of the most customisable discord ticket bots of all time!
+You have more than +100 options to customise in the config! This includes html transcripts, unlimited tickets, custom embeds & more!
+We also have a great support service, we can solve every question you have about open ticket! We even provide free 24/7 hosting if you want!
 
-<img src="logo.png" alt="Open Ticket logo" style="height: 200px; width:200px;"/>
+Take a look at all the features and discover the possibilities!
+### [Documentation](https://docs.openticket.dj-dj.be/quick-start)
 
-[![wiki](https://img.shields.io/badge/documentation-click%20here-blue.svg?style=flat-square)](https://www.github.com/DJj123dj/open-ticket/wiki) 
+## Features
+- **🎉 NEW! html transcripts!**
+- 🔒 close, ❌ delete & ✅ re-open tickets
+- 🇬🇧 translation in 12 different languages
+- 📄 very advanced customisation
+- 🆗 buttons or 🔽 dropdowns!
+- 🆒 plugins
+- ∞ unlimited tickets & unlimited messages
+- ➕➖ add/remove users from a ticket
+- /slash & text commands
 
-### Thanks to these people:
-- DJ-Lite: for doing the administration
-- Sanke: for translation & new ideas
-- Everyone that reported a bug
-#### And our translators!
-- ExothDE
-- 1x1
-- Redactado
-- t0miiis
-- josuens14
-- M4
-- David.
-- Maurizio
+<details>
+  <summary><b>Click here for even more features!</b></summary>
+  
+  
+  - very customisable
+  - close tickets with reason
+  - also includes reaction roles!
+  - discord interaction buttons
+  - discord.js 14
+</details>
 
-## features
-- discord interaction buttons
-- slash & text commands
-- close, delete & re-open tickets
-- translation in 10 different languages
-- transcripts
-- add/remove users from a ticket
-- a lot of customisation options.
-- tickets, reaction roles & links are all possible!
-- choose between buttons or dropdowns!
-- discord.js v14
-- everyting is configurable
-- custom API + plugins
-- unlimited tickets spread over multiple messages
-- close with reason
+## preview
+Images coming soon<br>
+You can already see some images at our [documentation!](https://docs.openticket.dj-dj.be)
 
-*comming soon*
-- share transcripts
-- view transcripts in html
 
-## quick start
-[Click here to start your adventure!](https://docs.openticket.dj-dj.be/quick-start)
+## credits
+DJdj Development Team
+|Main Developer|Developer|Support Team|Designer|
+|--------------|---------|-----------|---------|
+|DJj123dj      |Sanke    |DJ-Lite    |vuur_draak|
 
-## documentation
-[<img src="./otWIKI.png" width="400px" href="https://docs.openticket.dj-dj.be">](https://docs.openticket.dj-dj.be)
+Translators
+|Language      |Translator               |
+|--------------|-------------------------|
+|Dutch         |DJj123dj#1706            |
+|Romanian      |Sanke#6086               |
+|French        |Sanke#6086               |
+|Spanish       |Redactado#1673 & josuens14#5267|
+|German        |david.#8276              |
+|Italian       |Maurizio#0268            |
+|Czech         |t0miiis#3022             |
+|Arabic        |ChilledBroke#9986 & M4#5882|
+|Danish        |the_gamer#5095           |
+|Portuguese    |QuirAddon#9778           |
+|Russian       |Apexo#0723               |
 
-## information
+## links
+current version: _v3.2.2_
+</br>changelog: [click here](https://docs.openticket.dj-dj.be/other/changelog)
+</br>documentation: [click here](https://docs.openticket.dj-dj.be/quick-start)
 
-_v3.1.0_
-
-changelog: [click here](https://docs.openticket.dj-dj.be/other/changelog)
-
-© 2022 - DJdj Development | [website](https://www.dj-dj.be) | [discord](https://discord.dj-dj.be) | [terms of service](https://www.dj-dj.be/terms)
+© 2023 - DJdj Development | [website](https://www.dj-dj.be) | [discord](https://discord.dj-dj.be) | [terms of service](https://www.dj-dj.be/terms)

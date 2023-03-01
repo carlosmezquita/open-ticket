@@ -35,7 +35,10 @@ exports.createEmbed = (id) => {
     const embed = new discord.EmbedBuilder()
         .setTitle(data.name)
     if (data.enableFooter) embed.setFooter({text:data.footer})
-    if (data.enableThumbnail) embed.setThumbnail(data.thumbnail)
+
+    try {
+        if (data.enableThumbnail) embed.setThumbnail(data.thumbnail)
+    }catch{bot.errorLog.log("info","THUMBNAIL FAILED TO LOAD, probably invalid url!")}
 
     if (data.enableCustomColor){
         embed.setColor(data.color)
@@ -43,7 +46,7 @@ exports.createEmbed = (id) => {
         embed.setColor(config.main_color)
     }
 
-    if (data.other.embedTitleURL.enable) embed.setURL(data.other.embedTitleURL)
+    if (data.other.embedTitleURL.enable) embed.setURL(data.other.embedTitleURL.url)
 
     var description = data.description
     if (data.other.enableTicketExplaination){
