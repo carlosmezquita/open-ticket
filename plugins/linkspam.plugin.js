@@ -30,7 +30,7 @@ module.exports = () => {
         }
         if (urlRegex.test(message.content)) {
             if (recentLink.has(message.author.id)) {
-                await message.reply({ embeds: [rateLinkMsg], ephemeral: true });
+                await message.reply({ embeds: [rateLinkMsg]});
                 message.delete();
                 return;
             }
