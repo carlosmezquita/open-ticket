@@ -31,11 +31,13 @@ module.exports = () => {
 
     const urlRegex = httpRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
     const unsafeUrlRegex = /http:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
+    const gifUrl = /https?:\/\/tenor\.com\/view\/\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/
 
     const channel = client.channels.cache.get('1079816654269194384');
     // Listen for the 'message' event
     client.on(Events.MessageCreate, async (message) => {
         if (message.author.bot || message.member.permissions.has(PermissionsBitField.Flags.Administrator) || message.member.roles.cache.has("960199533927727144") || message.member.roles.cache.has("298102471040172032")) return;
+        if (gifUrl.test(message.content)) return;
         if (unsafeUrlRegex.test(message.content)) {
             message.author.send({ embeds: [unsafeLinkMsg] })
             channel.send({
