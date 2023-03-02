@@ -36,8 +36,8 @@ module.exports = () => {
     const channel = client.channels.cache.get('1079816654269194384');
     // Listen for the 'message' event
     client.on(Events.MessageCreate, async (message) => {
-        if (message.author.bot || message.member.permissions.has(PermissionsBitField.Flags.Administrator) || message.member.roles.cache.has("960199533927727144") || message.member.roles.cache.has("298102471040172032")) return;
-        if (gifUrl.test(message.content)) return;
+        if (message.author.bot) return;
+        if (message.member.permissions.has(PermissionsBitField.Flags.Administrator) || message.member.roles.cache.has("960199533927727144") || message.member.roles.cache.has("298102471040172032")) return;
         if (unsafeUrlRegex.test(message.content)) {
             message.author.send({ embeds: [unsafeLinkMsg] })
             channel.send({
@@ -57,7 +57,7 @@ module.exports = () => {
             message.delete()
             return;
         }
-        if (urlRegex.test(message.content)) {
+        if (urlRegex.test(message.content) && !gifUrl.test(message.content)) {
             if (recentLink.has(message.author.id)) {
                 message.author.send({ embeds: [rateLinkMsg] });
                 channel.send({
