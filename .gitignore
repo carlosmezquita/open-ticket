@@ -18,5 +18,5 @@ storage/.DS_Store
 livestatus.json
 test.js
 devtsconfig.json
-plugins/*
-!plugins/example.plugin.js
+# !plugins/*
+# !plugins/example.plugin.js
