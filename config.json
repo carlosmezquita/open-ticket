@@ -74,7 +74,7 @@
             "ticketmessage":"¡Un miembro del equipo te ayudará lo antes posible!\n\n*Haz click en el botón de abajo para cerrar la solicitud.*",
 
             "thumbnail":{
-                "enable":true,
+                "enable":false,
                 "url":"https://www.example.com/catmemes/cat.png"
             },
             "image":{
@@ -112,6 +112,10 @@
             "thumbnail":{
                 "enable":true,
                 "url":"https://cdn-icons-png.flaticon.com/512/4233/4233834.png"
+            },
+            "image":{
+                "enable":false,
+                "url":"https://www.dj-dj.be/wp-content/uploads/2022/09/pfp-cropped.png"
             },
 
             "closedCategory":{
