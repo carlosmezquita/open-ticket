@@ -1,7 +1,7 @@
 {
     "sendTranscripts":{
-        "enableChannel":false,
-        "channel":"transcript channel id",
+        "enableChannel":true,
+        "channel":"1062860504512606288",
         "useHTMLtranscripts":true,
         
         "enableDM":false
