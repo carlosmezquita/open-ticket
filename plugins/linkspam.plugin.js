@@ -1,7 +1,8 @@
 const { Events, EmbedBuilder, PermissionsBitField  } = require('discord.js');
 const api = require("../core/api/api.js")
 module.exports = () => {
-    const {client,config,events,utils,actions} = api
+    // const {client,config,events,utils,actions} = api
+    const {client} = api
 
     const recentLink = new Set();
     //Cooldown in seconds
@@ -17,17 +18,6 @@ module.exports = () => {
     .setDescription("Has excedido el límite de envío de enlaces (1/60s) permitido por el servidor de 'r/Spain Discord'. Por favor, espera antes de enviar más enlaces.\n\nIncumplir esta norma puede resultar en una expulsión inmediata.")
     .setColor("f4af1b")
 
-    function spamMessageAlert(message) {
-        return new EmbedBuilder()
-        .setAuthor({name: "Alerta"})
-        .setTitle("Protección automática contra spam.")
-        .addFields(
-            { name: "Autor", value: message.author.toString(), inline: true},
-            { name: "Canal", value: message.channel.toString(), inline: true},
-            { name: 'Mensaje', value: message.content, inline: false}
-        )
-        .setColor("fd0000")
-    } 
 
     const urlRegex = httpRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
     const unsafeUrlRegex = /http:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
