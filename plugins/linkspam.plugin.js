@@ -24,24 +24,24 @@ async function rateLimitedAction(message, channel, userRateLimitData) {
                 .setFooter({ text: `Tus avisos expirarán a los ${cooldownSecs} segundos.`})
                 .setColor("f4af1b")]
         });
-        if (sendAlert) {
-            await channel.send({
-                embeds: [
-                    new EmbedBuilder()
-                        .setAuthor({ name: "Alerta" })
-                        .setTitle("Protección automática contra spam.")
-                        .setDescription("El usuario ha superado la tasa permitida de envío de enlaces")
-                        .addFields(
-                            { name: "Autor", value: message.author.toString(), inline: true },
-                            {name: `Avisos (${cooldownSecs}s)`, value: userRateLimitData.counter + "/" + warnsLimit, inline: true },
-                            { name: "Canal", value: message.channel.toString(), inline: true },
-                            { name: 'Mensaje', value: message.content, inline: false }
-                        )
-                        .setFooter({ text: "Peligro de nivel medio." })
-                        .setColor("F00000")
-                ]
-            });
-        }
+    }
+    if (sendAlert) {
+        await channel.send({
+            embeds: [
+                new EmbedBuilder()
+                    .setAuthor({ name: "Alerta" })
+                    .setTitle("Protección automática contra spam.")
+                    .setDescription("El usuario ha superado la tasa permitida de envío de enlaces")
+                    .addFields(
+                        { name: "Autor", value: message.author.toString(), inline: true },
+                        {name: `Avisos (${cooldownSecs}s)`, value: userRateLimitData.counter + "/" + warnsLimit, inline: true },
+                        { name: "Canal", value: message.channel.toString(), inline: true },
+                        { name: 'Mensaje', value: message.content, inline: false }
+                    )
+                    .setFooter({ text: "Peligro de nivel medio." })
+                    .setColor("F00000")
+            ]
+        });
     }
     message.delete();
     if (userRateLimitData.counter == warnsLimit) {
