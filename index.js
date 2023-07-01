@@ -41,7 +41,7 @@
 
     Send ./openticketdebug.txt when there are errors!
  */
-
+require('dotenv').config()
 const discord = require("discord.js")
 const fs = require('fs')
 const {GatewayIntentBits,Partials} = discord
