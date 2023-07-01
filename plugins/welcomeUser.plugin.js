@@ -1,8 +1,6 @@
-const https = require('https');
-const { Client, EmbedBuilder, GatewayIntentBits, Events } = require('discord.js');
-const { token } = require('./config.json');
-const { channel } = require('diagnostics_channel');
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildPresences] });
+const { EmbedBuilder, Events } = require('discord.js');
+const api = require("../core/api/api.js")
+
 module.exports = () => {
   const { client } = api
   const channel = client.channels.cache.get("667125197190725642")
