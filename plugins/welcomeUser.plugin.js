@@ -10,7 +10,7 @@ module.exports = () => {
     const username = (user.username + user.discriminator == "0" ? "" : "#" + user.discriminator).replace("_","\\_");
 
     const welcomeEmbed = new EmbedBuilder()
-      .setColor("#90FCF9")
+      .setColor("#8386ff")
       .setAuthor({ name: `Nuevo Usuario (${guild.memberCount})`, iconURL: "https://raw.githubusercontent.com/carlosmezquita/open-ticket/137b27f6b3b8a4a1fc34119ab001ed704d8a3ca4/storage/media/new_user.png" })
       .setTitle("¡Bienvenido al servidor de r/Spain!")
       .setDescription("Damos la bienvenida a " + username + " al Discord de r/Spain, ¡gracias por unirte!\n" +
