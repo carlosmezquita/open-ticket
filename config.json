@@ -148,7 +148,7 @@
                 {
                     "label": "Support Reason",
                     "style": "long",
-                    "maxLength": 5000,
+                    "maxLength": 1024,
                     "minLength": 15,
                     "placeholder": "Please, describe the reason of your support request.",
                     "value": "",
