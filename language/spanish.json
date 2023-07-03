@@ -1,4 +1,7 @@
 {
+    "_CREDITS":"Redactado#1673 & josuens14#5267",
+    "_INFO":"This file is a translation for open ticket 3.4.1",
+
     "errors":{
         "missingArgsTitle":"¡Argumentos inválidos!",
         "missingArgsDescription":"Argumento faltante.",
@@ -61,6 +64,9 @@
         "delete":"Eliminar ticket",
         "reopen":"Re-Abrir ticket",
         "closeWithReason":"cerrar con razón"
+    },
+    "modals":{
+        "emptyAnswer": "No ha sido respondido"
     },
     "messages":{
         "closedDescription":"¡Solo admins pueden hablar ahora en este ticket!\n\n*¡Presiona en el botón de abajo para eliminar o re-abrir el ticket!*",

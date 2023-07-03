@@ -1,4 +1,7 @@
 {
+    "_CREDITS":"DJdj Development",
+    "_INFO":"This file is a translation for open ticket 3.4.1",
+
     "errors":{
         "missingArgsTitle":"Invalid Arguments!",
         "missingArgsDescription":"Missing Argument",
@@ -61,6 +64,9 @@
         "delete":"Delete Ticket",
         "reopen":"Re-Open Ticket",
         "closeWithReason":"close with reason"
+    },
+    "modals":{
+        "emptyAnswer": "No answer was given"
     },
     "messages":{
         "closedDescription":"Only admins can talk in this ticket now!\n\n*Click on the button below to delete or to re-open this ticket!*",

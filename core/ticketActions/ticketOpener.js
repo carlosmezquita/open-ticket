@@ -42,35 +42,101 @@ module.exports = () => {
             }
         }
 
-        
-        if (configParser.getTicketValuesArray("id").includes(customId)){
+
+        if (configParser.getTicketValuesArray("id").includes(customId)) {
 
             //ticketoptions from config
             const currentTicketOptions = configParser.getTicketById(customId)
-            if (currentTicketOptions == false) return interaction.reply({embeds:[bot.errorLog.serverError(l.errors.anotherOption)]})
+            if (currentTicketOptions == false) return interaction.reply({embeds: [bot.errorLog.serverError(l.errors.anotherOption)]})
 
-            if (interaction.isButton()){
-                try {
-                    await interaction.deferReply({ephemeral:config.system.answerInEphemeralOnOpen})
-                } catch{}
-            }else if (interaction.isChatInputCommand()){
-                await interaction.deferReply({ephemeral:config.system.answerInEphemeralOnOpen})
-            }else if (interaction.isStringSelectMenu()){
-                try {
-                   await interaction.deferUpdate()
-                } catch{}
-            }
 
-            if (storage.get("amountOfUserTickets",interaction.member.id) == null || storage.get("amountOfUserTickets",interaction.member.id) == "false"|| Number(storage.get("amountOfUserTickets",interaction.member.id)) < config.system.maxAmountOfTickets){
+            if (storage.get("amountOfUserTickets", interaction.member.id) == null || storage.get("amountOfUserTickets", interaction.member.id) == "false" || Number(storage.get("amountOfUserTickets", interaction.member.id)) < config.system.maxAmountOfTickets) {
+              
+                //display modal
+                let modalReply = [];
+                if (currentTicketOptions.modal.enable && currentTicketOptions.modal.modalId.length > 0) {
+                    let modalConfig = configParser.getTicketModal(currentTicketOptions.modal.modalId)
+                    if (modalConfig.questions.length != undefined) {
+                        const questions = modalConfig.questions
+                        const modal = new discord.ModalBuilder()
+                            .setCustomId(modalConfig.id)
+                            .setTitle(modalConfig.title)
+                        let index = 0;
+                        //Build each question component
+                        while (index < questions.length && index < 5) {
+                            const question = questions[index];
+
+                            const component = new discord.TextInputBuilder()
+                                .setCustomId(index + "-" + currentTicketOptions.modal.id)
+                                .setLabel(question.label)
+                                .setMaxLength(question.maxLength)
+                                .setMinLength(question.minLength)
+                                .setRequired(question.required)
+                            if (question.placeholder != "") component.setPlaceholder(question.placeholder)
+                            if (question.value.length > question.minLength & question.value.length < question.maxLength && question.value != "") component.setValue(question.value)
+                            if (question.style === "short") component.setStyle(discord.TextInputStyle.Short)
+                            else if (question.style === "long") component.setStyle(discord.TextInputStyle.Paragraph)
+                            modal.addComponents(new discord.ActionRowBuilder().addComponents(component))
+
+                            index++;
+                        }
+
+                        await interaction.showModal(modal)
+
+                        interaction = await interaction.awaitModalSubmit({
+                            time: 6000 * 15, //timeout after 15 minutes
+                            dispose: true,
+                            filter: i => i.user.id === interaction.user.id,
+                        }).catch(error => {
+                            if (error.code !== 'InteractionCollectorError' && error !== 'Collector received no interactions before ending with reason: time') {
+                                console.error(error)
+                            }
+                            return null
+                        })
+                        if (interaction === null) return;
+                        else if (interaction.isModalSubmit()) {
+                            let i = 0;
+                            interaction.fields.fields.each(field => {
+                                const inputGiven = field.value.length <= 0 ? `_${typeof (l.modals || {}).emptyAnswer === "undefined" ? "No answer was given" : l.modals.emptyAnswer}_` : field.value
+                                modalReply.push([questions[i].label, inputGiven])
+                                i++;
+                            })
+                            try {
+                                if (config.system.answerInEphemeralOnOpen) await interaction.deferReply({ephemeral: config.system.answerInEphemeralOnOpen})
+                                else {
+                                    await interaction.deferUpdate()
+                                }
+                            } catch {
+                                return
+                            }
+                        }
+                    }
+                }
+                if (config.system.answerInEphemeralOnOpen && !currentTicketOptions.modal.enable) {
+                    if (interaction.isButton()){
+                        try {
+                            await interaction.deferReply({ephemeral:config.system.answerInEphemeralOnOpen})
+                        } catch{}
+                    }else if (interaction.isChatInputCommand()){
+                        try {
+                            await interaction.deferReply({ephemeral:config.system.answerInEphemeralOnOpen})
+                        } catch{}
+                    }else if (interaction.isStringSelectMenu()){
+                        try {
+                           await interaction.deferUpdate()
+                        } catch{}
+                    }
+                } else if (!currentTicketOptions.modal.enable && !interaction.isModalSubmit()) {
+                    await interaction.deferUpdate()
+                }
 
                 //update storage
-                storage.set("amountOfUserTickets",interaction.member.id,Number(storage.get("amountOfUserTickets",interaction.member.id))+1)
+                storage.set("amountOfUserTickets", interaction.member.id, Number(storage.get("amountOfUserTickets", interaction.member.id)) + 1)
                 var ticketNumber = interaction.member.user.username
-
                 //set ticketName
-                var ticketName = currentTicketOptions.channelprefix+ticketNumber
+                var ticketName = currentTicketOptions.channelprefix + ticketNumber
                 var logsname = currentTicketOptions.name
-                
+
                 //category
                 if (currentTicketOptions.category.length < 16 || currentTicketOptions.category.length > 20){
                     var newTicketCategory = null
@@ -132,25 +198,23 @@ module.exports = () => {
                 })
 
                 //add ticket adminroles
-                /**
-                 * @type {String[]}
-                 */
-                const readonlyTicketadmin = currentTicketOptions.readonlyAdminroles
-                readonlyTicketadmin.forEach((role,index) => {
-                    if (!config.adminRoles.includes(role) && !currentTicketOptions.adminroles.includes(role)){
-                        try {
-                            const adminrole = guild.roles.cache.find(r => r.id == role)
-                            if (!adminrole) return
-                        
-                            permissionsArray.push({
-                                id:adminrole,
-                                type:"role",
-                                allow:[pfb.AddReactions,pfb.ViewChannel],
-                                deny:[pfb.SendMessages,pfb.AttachFiles,pfb.EmbedLinks]
-                            })
-                        }catch{}
-                    }
-                })
+                if (currentTicketOptions.readonlyAdminroles){
+                    currentTicketOptions.readonlyAdminroles.forEach((role,index) => {
+                        if (!config.adminRoles.includes(role) && !currentTicketOptions.adminroles.includes(role)){
+                            try {
+                                const adminrole = guild.roles.cache.find(r => r.id == role)
+                                if (!adminrole) return
+
+                                permissionsArray.push({
+                                    id:adminrole,
+                                    type:"role",
+                                    allow:[pfb.AddReactions,pfb.ViewChannel],
+                                    deny:[pfb.SendMessages,pfb.AttachFiles,pfb.EmbedLinks]
+                                })
+                            }catch{}
+                        }
+                    })
+                }
 
                 //add member role
                 if (config.system.memberRole && ![" ","0","false","null","undefined"].includes(config.system.memberRole)){
@@ -178,7 +242,7 @@ module.exports = () => {
                     storage.set("userFromChannel",ticketChannel.id,interaction.member.id)
                     if (currentTicketOptions.autoclose.enable) storage.set("autocloseTickets",ticketChannel.id,currentTicketOptions.autoclose.inactiveHours)
 
-                    const hiddendata = bot.hiddenData.writeHiddenData("ticketdata",[{key:"type",value:currentTicketOptions.id},{key:"openerid",value:interaction.user.id},{key:"createdms",value:new Date().getTime()}])
+                    bot.hiddenData.writeHiddenData(ticketChannel.id,[{key:"type",value:currentTicketOptions.id},{key:"openerid",value:interaction.user.id},{key:"createdms",value:new Date().getTime()}])
 
                     var ticketEmbed = new discord.EmbedBuilder()
                         //.setAuthor({name:interaction.user.id})
@@ -191,16 +255,25 @@ module.exports = () => {
                     }
 
                     if (currentTicketOptions.ticketmessage.length > 0){
-                        ticketEmbed.setDescription(currentTicketOptions.ticketmessage+hiddendata)
-                    }else{
-                        ticketEmbed.setDescription(hiddendata)
+                        ticketEmbed.setDescription(currentTicketOptions.ticketmessage)
                     }
 
                     if (currentTicketOptions.thumbnail.enable) ticketEmbed.setThumbnail(currentTicketOptions.thumbnail.url)
                     if (currentTicketOptions.image.enable) ticketEmbed.setImage(currentTicketOptions.image.url)
+
+                    if (currentTicketOptions.modal.enable && interaction.isModalSubmit()) {
+                        modalReply.forEach(item => {
+                            ticketEmbed.addFields({name: item[0], value: item[1]})
+                        })
+                    }
                 
+                    const herePing = currentTicketOptions.ping['@here'] ? " @here" : ""
+                    const everyonePing = currentTicketOptions.ping['@everyone'] ? " @everyone" : ""
+                    const customPing = currentTicketOptions.ping.custom.enable ? " <@&"+currentTicketOptions.ping.custom.roleId+">" : ""
+
+
                     ticketChannel.send({
-                        content:"<@"+interaction.member.id+"> @here",
+                        content:"<@"+interaction.member.id+">"+herePing+everyonePing+customPing,
                         embeds:[ticketEmbed],
                         components:[closeButton]
                     
@@ -208,7 +281,7 @@ module.exports = () => {
                         firstmsg.pin()
                     })
                     
-                    log("system","created new ticket",[{key:"ticket",value:ticketName},{key:"user",value:interaction.user.tag}])
+                    log("system","created new ticket",[{key:"ticket",value:ticketName},{key:"user",value:interaction.user.username}])
                     require("../api/modules/events").onTicketOpen(interaction.user,ticketChannel,interaction.guild,new Date(),{name:ticketName,status:"open",ticketOptions:currentTicketOptions})
 
                     const channelbutton = new discord.ActionRowBuilder()
@@ -225,8 +298,14 @@ module.exports = () => {
                         if (currentTicketOptions.enableDmOnOpen) interaction.member.send({embeds:[bot.errorLog.custom(l.messages.newTicketDmTitle,currentTicketOptions.message,":ticket:",config.color)],components:[channelbutton]})
                     }
                     catch{log("system","failed to send DM")}
-
-                    if ((interaction.isButton() && config.system.answerInEphemeralOnOpen) || interaction.isChatInputCommand()) interaction.editReply({embeds:[bot.errorLog.success(l.messages.createdTitle,l.messages.createdDescription)],components:[channelbutton]})
+                  
+                    if ((interaction.isButton() && config.system.answerInEphemeralOnOpen) || interaction.isChatInputCommand() || interaction.isModalSubmit()){
+                        if (interaction.deferred){
+                            interaction.editReply({embeds:[bot.errorLog.success(l.messages.createdTitle,l.messages.createdDescription)],components:[channelbutton]})
+                        }else{
+                            interaction.reply({embeds:[bot.errorLog.success(l.messages.createdTitle,l.messages.createdDescription)],components:[channelbutton]})
+                        }
+                    }
                     
                 })
             }else{

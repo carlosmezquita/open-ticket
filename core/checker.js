@@ -179,7 +179,7 @@ exports.checker = async () => {
         checkType(option.description,"string",path+"/description")
 
         //icon
-        const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/gi;
+        const emojiRegex = /(?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])|(?:<a?:[^:]*:[0-9]+>)/gi
         if (option.icon.length > 0){
 
             const isEmoji = emojiRegex.test(option.icon)
@@ -232,7 +232,19 @@ exports.checker = async () => {
             checkType(option.enableDmOnOpen,"boolean",path+"/enableDmOnOpen")
 
             //ticketmessage
-            checkType(option.ticketmessage,"string",path+"/ticketmessage")
+            checkType(option.ticketmessage, "string", path + "/ticketmessage")
+            
+            //modal
+            if (option.modal) {
+                checkType(option.modal.enable, "boolean", path + "/modal/enable")
+                checkType(option.modal.modalId, "string", path + "/modal/modalId")
+                if (option.modal.enable == true) {
+                    if (option.modal.modalId == "") createError("'" + path + "/modal/modalId' | modal is enabled but the id is not specified!")
+                    else if(!configParser.modalExists(option.modal.modalId)) createError("'"+path+"/modal/modalId' | there are no modals with id \""+option.modal.modalId+"\"!")
+                }
+            } else {
+                createError("'"+path+"/modal' | there is no modal object!")
+            }
 
             //thumbnail
             if (option.thumbnail){
@@ -301,6 +313,101 @@ exports.checker = async () => {
             //enableDmOnOpen
             checkType(option.enableDmOnOpen,"boolean",path+"/enableDmOnOpen")
         }
+    }
+
+    /**
+     * 
+     * @param {configParser.OTTModalOptions} input
+     * @param {String} path
+     */
+    const checkModal = (input, path) => {
+        //id
+        if (!input.id) createError("'" + path + "/id' | this embed doesn't have an id!")
+        if (input.id.length > 50) createError("'" + path + "/id' | the id can't be longer than 50")
+        if (input.id.includes(" ") || input.id.includes("\n")) createError("'" + path + "/id' | the id can't contain spaces!")
+
+        //title
+        if (input.title.length < 1) {
+            createWarn("'" + path + "/title' | this modal has no title!")
+        } else if (input.title.length > 99) {
+            createError("'" + path + "/title' | the title can't be longer than 100")
+        }
+
+        //Questions!
+        let counter = 0
+
+        if (counter >= input.questions.length) {
+            createError("'" + path + "/questions' | you must have at least one question!")
+        }
+        if (input.questions.length > 5) {
+            createError("'" + path + "/questions' | there cannot be more than 5 questions per modal!")
+        }
+
+        //questions
+        input.questions.forEach((input, index) => {
+            const path = "questions/" + index
+            //label
+            if (input.label) {
+                if (input.label.length < 1) {
+                    createWarn("'" + path + "/label' | this question has no label!")
+                } else if (input.label.length > 99) {
+                    createError("'" + path + "/label' | the label can't be longer than 100")
+                }
+            } else {
+                createError("'" + path + "/label' | there is no \"label\" attribute!")
+            }
+
+            //style
+            if (input.style) {
+                if (input.style !== "short" && input.style !== "long") {
+                    createError("'" + path + "/style' | invalid style, it must be \"short\" or \"long\"")
+                }
+            } else {
+                createError("'" + path + "/style' | there is no \"style\" attribute!. Its types are \"short\" or \"long\"")
+            }
+
+            //maxLength
+            if (input.maxLength) {
+                checkType(input.maxLength, "number", path + "/maxLength")
+                if (input.maxLength > 1024) {
+                    createError("'" + path + "/maxLength' | cannot be bigger than 1024 due to Discord limitations on embeds")
+                }
+            } else {
+                createError("'" + path + "/maxLength' | there is no \"maxLength\" attribute!")
+            }
+
+
+            //minLength
+            if (input.maxLength) {
+                checkType(input.maxLength, "number", path + "/minLength")
+                if (input.minLength < 0) {
+                    createError("'" + path + "/minLength' | cannot be smaller than 0")
+                }else if (input.required === false && input.minLength > 0){
+                    createError("'" + path + "/minLength' | if \"required\" is set to \"true\" then \"minLength\" must be 0")
+                }
+            } else {
+                createError("'" + path + "/minLength' | there is no \"minLength\" attribute!")
+            }
+
+            //placeholder
+            checkType(input.placeholder, "string", path + "/placeholder")
+
+
+            //value
+            if (checkType(input.value, "string", path + "/value")){
+                if (input.value !== "" &&(input.value.length < input.minLength || input.value.length > input.maxLength)){
+                    createError("'" + path + "/value' | value must be bigger than \"minLength\" and smaller than \"maxLength\"!")
+                }
+            }
+
+
+
+            //required
+            if (checkType(input.required, "boolean", path + "/required")){}
+
+
+        })
+        // }
     }
 
     /**
@@ -427,7 +534,7 @@ exports.checker = async () => {
     checkType(config.languageFile,"string","languagefile")
     const lf = config.languageFile
     
-    if (!lf.startsWith("custom") && !lf.startsWith("english") && !lf.startsWith("dutch") && !lf.startsWith("romanian") && !lf.startsWith("german") && !lf.startsWith("arabic") && !lf.startsWith("spanish") && !lf.startsWith("portuguese") && !lf.startsWith("french") && !lf.startsWith("italian") && !lf.startsWith("czech") && !lf.startsWith("danish") && !lf.startsWith("russian") && !lf.startsWith("turkish") && !lf.startsWith("polish") && !lf.startsWith("slovenian")){
+    if (!lf.startsWith("custom") && !lf.startsWith("english") && !lf.startsWith("dutch") && !lf.startsWith("romanian") && !lf.startsWith("german") && !lf.startsWith("arabic") && !lf.startsWith("spanish") && !lf.startsWith("portuguese") && !lf.startsWith("french") && !lf.startsWith("italian") && !lf.startsWith("czech") && !lf.startsWith("danish") && !lf.startsWith("russian") && !lf.startsWith("turkish") && !lf.startsWith("polish") && !lf.startsWith("slovenian")  && !lf.startsWith("thai") && !lf.startsWith("norwegian") && !lf.startsWith("greek") && !lf.startsWith("ukrainian")){
         createError("'languagefile' | invalid language, more info in the wiki")
     }
 
@@ -472,6 +579,11 @@ exports.checker = async () => {
 
     config.options.forEach((option,index) => {
         checkOption(option,"options/"+index)
+    })
+
+    //modals
+    config.modals.forEach((modal, index) => {
+        checkModal(modal, "modals/"+index)
     })
 
     //messages

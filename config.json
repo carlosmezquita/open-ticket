@@ -49,6 +49,11 @@
             "enableDmOnOpen":true,
             "ticketmessage":"¡Un miembro del equipo te ayudará lo antes posible!\n\n*Haz click en el botón de abajo para cerrar la solicitud.*",
 
+            "modal":{
+                "enable": true,
+                "modalId":"name_description"
+            },
+
             "thumbnail":{
                 "enable":false,
                 "url":"https://www.example.com/catmemes/cat.png"
@@ -64,8 +69,17 @@
             },
 
             "autoclose":{
-                "enable":true,
-                "inactiveHours":72
+                "enable":false,
+                "inactiveHours":24
+            },
+
+            "ping":{
+                "@here":true,
+                "@everyone":false,
+                "custom":{
+                    "enable":false,
+                    "roleId":"012345678910"
+                }
             }
             
         },
@@ -106,7 +120,32 @@
             
         }
     ],
-
+    "modals": [
+        {
+            "id": "name_description",
+            "title": "Modal Title",
+            "questions": [
+                {
+                    "label": "Name",
+                    "style": "short",
+                    "maxLength": 50,
+                    "minLength": 3,
+                    "placeholder": "Enter your name",
+                    "value": "",
+                    "required": true
+                },
+                {
+                    "label": "Description",
+                    "style": "long",
+                    "maxLength": 1000,
+                    "minLength": 0,
+                    "placeholder": "Explain what happened",
+                    "value": "",
+                    "required": false
+                }
+            ]
+        }
+    ],
     "messages":[
         {
             "id":"1",
@@ -115,7 +154,7 @@
             "dropdown":false,
 
             "enableFooter":false,
-            "footer":"Open Ticket v3.3.3 - I'm a footer!",
+            "footer":"Open Ticket v3.4.1 - I'm a footer!",
 
             "enableFooterImage":false,
             "footerImage":"https://www.example.com/catmemes/cat.png",
