@@ -13,8 +13,8 @@ module.exports = () => {
       .setColor("#8386ff")
       .setAuthor({ name: `Nuevo Usuario (${guild.memberCount})`, iconURL: "https://raw.githubusercontent.com/carlosmezquita/open-ticket/137b27f6b3b8a4a1fc34119ab001ed704d8a3ca4/storage/media/new_user.png" })
       .setTitle("¡Bienvenido al servidor de r/Spain!")
-      .setDescription("Damos la bienvenida a " + username + " al Discord de r/Spain, ¡gracias por unirte!\n" +
-        "_We welcome " + username + " to the r/Spain Discord, thanks for joining!_")
+      .setDescription("Damos la bienvenida a **" + username + "** al Discord de r/Spain, ¡gracias por unirte!\n" +
+        "_We welcome **" + username + "** to the r/Spain Discord, thanks for joining!_")
       .setThumbnail(user.displayAvatarURL())
       .setFooter({ text: "Staff", iconURL: "https://media.discordapp.net/attachments/298140651676237824/1051478405897527316/rspainupscaled.png" })
       .setTimestamp()
