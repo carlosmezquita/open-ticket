@@ -10,7 +10,6 @@ module.exports = () => {
     const { client } = api
 
     const channel = client.channels.cache.get(channelID);
-    sendRandomDailyQuestion(channel);
 
     cron.schedule('0 14 * * *', () => {
         sendRandomDailyQuestion(channel);
