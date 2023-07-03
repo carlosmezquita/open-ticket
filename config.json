@@ -133,7 +133,7 @@
                 {
                     "label": "Motivo de Asistencia",
                     "style": "long",
-                    "maxLength": 5000,
+                    "maxLength": 1024,
                     "minLength": 15,
                     "placeholder": "Por favor, describa el motivo de su solicitud de asistencia.",
                     "value": "",
@@ -152,7 +152,7 @@
                     "minLength": 15,
                     "placeholder": "Please, describe the reason of your support request.",
                     "value": "",
-                    "required": false
+                    "required": true
                 }
             ]
         }
