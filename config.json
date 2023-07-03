@@ -51,7 +51,7 @@
 
             "modal":{
                 "enable": true,
-                "modalId":"name_description"
+                "modalId":"basic_info_es"
             },
 
             "thumbnail":{
@@ -100,6 +100,11 @@
             "enableDmOnOpen":true,
             "ticketmessage":"The staff will help you soon!\n\n*Click on the button below to close the ticket!*",
 
+            "modal":{
+                "enable": true,
+                "modalId":"basic_info_eng"
+            },
+
             "thumbnail":{
                 "enable":true,
                 "url":"https://cdn-icons-png.flaticon.com/512/4233/4233834.png"
@@ -122,24 +127,30 @@
     ],
     "modals": [
         {
-            "id": "name_description",
-            "title": "Modal Title",
+            "id": "basic_info_es",
+            "title": "Solicitud de Asistencia",
             "questions": [
                 {
-                    "label": "Name",
-                    "style": "short",
-                    "maxLength": 50,
-                    "minLength": 3,
-                    "placeholder": "Enter your name",
+                    "label": "Motivo de Asistencia",
+                    "style": "long",
+                    "maxLength": 5000,
+                    "minLength": 15,
+                    "placeholder": "Por favor, describa el motivo de su solicitud de asistencia.",
                     "value": "",
                     "required": true
-                },
+                }
+            ]
+        },
+        {
+            "id": "basic_info_eng",
+            "title": "Support Request",
+            "questions": [
                 {
-                    "label": "Description",
+                    "label": "Support Reason",
                     "style": "long",
-                    "maxLength": 1000,
-                    "minLength": 0,
-                    "placeholder": "Explain what happened",
+                    "maxLength": 5000,
+                    "minLength": 15,
+                    "placeholder": "Please, describe the reason of your support request.",
                     "value": "",
                     "required": false
                 }
