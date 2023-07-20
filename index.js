@@ -283,6 +283,7 @@ if (process.argv[2] && process.argv[2].startsWith("slash")){
     require("./commands/claim")()
     require("./commands/unclaim")()
     require("./commands/change")()
+    require("./commands/place")()
     this.actionRecorder.push({
         category:"ot.managers.loader",
         file:"./index.js",

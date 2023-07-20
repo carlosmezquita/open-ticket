@@ -249,6 +249,16 @@ module.exports = async (invisible) => {
         readystats++
     })
 
+    //place
+    client.application.commands.create({
+        name:"place",
+        description:"Place commands.",
+        defaultPermission:true,
+        type:act.ChatInput
+    },sid).then(() => {
+        readystats++
+    })
+
     //category
     client.application.commands.create({
         name:"change",
