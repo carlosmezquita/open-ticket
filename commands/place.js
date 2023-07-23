@@ -11,12 +11,11 @@ const DISABLE = require("../core/api/api.json").disable
 module.exports = () => {
     bot.errorLog.log("debug","COMMANDS: loaded place.js")
   if (!DISABLE.commands.slash.place) client.on("interactionCreate", (interaction) => {
-      console.log(interaction.commandName)
       if (!interaction.isChatInputCommand()) return
       if (interaction.commandName != "place") return
           if (!interaction.guild) return
           if (!permsChecker.command(interaction.user.id,interaction.guild.id)){
-              permsChecker.sendUserNoPerms(interaction.user)
+            interaction.reply({content: "Para toda la información sobre el r/Place accede a la categoría de r/Place", ephemeral: true})
               return
           }
 
@@ -42,6 +41,6 @@ module.exports = () => {
             .setTimestamp()
           
           // interaction.reply({content:l.commands.ticketWarning})
-          interaction.channel.send({content: "@everyone", embeds:[embed],components:[row]})
+          interaction.channel.send({content: "@/everyone", embeds:[embed],components:[row]})
   })
 }

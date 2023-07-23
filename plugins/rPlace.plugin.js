@@ -1,7 +1,7 @@
 const { EmbedBuilder, Events } = require('discord.js');
 const api = require("../core/api/api.js")
 
-const role = "1118642400357777579";
+const role = "1131636103301050469";
 
 module.exports = () => {
   const { client } = api
@@ -12,13 +12,12 @@ module.exports = () => {
       if (!interaction.guild.members.cache.find(u => u.id == user.id).roles.cache.has(role)){
         interaction.guild.members.cache.find(u => u.id == user.id).roles.add(role)
 
-        interaction.guild.roles.cache.find(r => r.id == role)
+        interaction.reply({content:"Rol añadido correctamente.", ephemeral: true})
     }else {
         interaction.guild.members.cache.find(u => u.id == user.id).roles.remove(role)
 
-        interaction.guild.roles.cache.find(r => r.id == role)
+        interaction.reply({content:"Rol eliminado correctamente.", ephemeral: true})
     }
       
     }
   })}
-

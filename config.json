@@ -121,6 +121,14 @@
             "autoclose":{
                 "enable":true,
                 "inactiveHours":72
+            },
+            "ping":{
+                "@here":true,
+                "@everyone":false,
+                "custom":{
+                    "enable":false,
+                    "roleId":"012345678910"
+                }
             }
             
         }
