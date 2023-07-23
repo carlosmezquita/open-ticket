@@ -33,6 +33,57 @@
     "SUPPORT":"Take look at our wiki: https://docs.openticket.dj-dj.be or join our discord server: https://discord.dj-dj.be if you need support!",
     "options":[
         {
+            "id":"rplace",
+            "name":"Asistencia R/Place",
+            "description":"Asistencia para r/Place.\n Assistance for r/Place",
+            "icon":"🇪🇸",
+            "label":"R/Place",
+            "type":"ticket",
+
+            "color":"gray",
+            "adminroles":["960199533927727144","1131596076097474731"],
+            "readonlyAdminroles":[""],
+            "channelprefix":"rplace-",
+            "category":"1062847821256069120",
+            "message":"¡Has iniciado una solicitud de asistencia en SpainCraft!",
+            "enableDmOnOpen":true,
+            "ticketmessage":"¡Un miembro del equipo te ayudará lo antes posible!\n\n*Haz click en el botón de abajo para cerrar la solicitud.*",
+
+            "modal":{
+                "enable": true,
+                "modalId":"basic_info_es"
+            },
+
+            "thumbnail":{
+                "enable":false,
+                "url":"https://www.example.com/catmemes/cat.png"
+            },
+            "image":{
+                "enable":false,
+                "url":"https://www.dj-dj.be/wp-content/uploads/2022/09/pfp-cropped.png"
+            },
+
+            "closedCategory":{
+                "enable":false,
+                "id":"category id"
+            },
+
+            "autoclose":{
+                "enable":true,
+                "inactiveHours":72
+            },
+
+            "ping":{
+                "@here":false,
+                "@everyone":false,
+                "custom":{
+                    "enable":true,
+                    "roleId":"1131596076097474731"
+                }
+            }
+            
+        },
+        {
             "id":"spanish",
             "name":"Español",
             "description":"Asistencia en español.",
@@ -135,6 +186,21 @@
     ],
     "modals": [
         {
+            "id": "rplace_modal",
+            "title": "Solicitud de Asistencia r/Place",
+            "questions": [
+                {
+                    "label": "Motivo de Asistencia",
+                    "style": "long",
+                    "maxLength": 1024,
+                    "minLength": 15,
+                    "placeholder": "Explica aquí el motivo de asistencia. \nExplain here your support request.",
+                    "value": "",
+                    "required": true
+                }
+            ]
+        },
+        {
             "id": "basic_info_es",
             "title": "Solicitud de Asistencia",
             "questions": [
@@ -187,7 +253,7 @@
             "enableCustomColor":false,
             "color":"#ffffff",
 
-            "options":["spanish","english"],
+            "options":["spanish","english","rplace"],
             
             "other":{
                 "enableTicketExplaination":true,
