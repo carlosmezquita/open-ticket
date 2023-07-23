@@ -34,10 +34,10 @@
     "options":[
         {
             "id":"rplace",
-            "name":"Asistencia R/Place",
-            "description":"Asistencia para r/Place.\n Assistance for r/Place",
-            "icon":"🇪🇸",
-            "label":"R/Place",
+            "name":"Asistencia rPlace",
+            "description":"Asistencia para rPlace.\n Assistance for rPlace",
+            "icon":"🎨",
+            "label":"rPlace",
             "type":"ticket",
 
             "color":"gray",
@@ -45,7 +45,7 @@
             "readonlyAdminroles":[""],
             "channelprefix":"rplace-",
             "category":"1062847821256069120",
-            "message":"¡Has iniciado una solicitud de asistencia en SpainCraft!",
+            "message":"¡Has iniciado una solicitud de asistencia para rPlace en rSpain!",
             "enableDmOnOpen":true,
             "ticketmessage":"¡Un miembro del equipo te ayudará lo antes posible!\n\n*Haz click en el botón de abajo para cerrar la solicitud.*",
 
@@ -96,7 +96,7 @@
             "readonlyAdminroles":[""],
             "channelprefix":"asistencia-",
             "category":"1062847821256069120",
-            "message":"¡Has iniciado una solicitud de asistencia en SpainCraft!",
+            "message":"¡Has iniciado una solicitud de asistencia en rSpain!",
             "enableDmOnOpen":true,
             "ticketmessage":"¡Un miembro del equipo te ayudará lo antes posible!\n\n*Haz click en el botón de abajo para cerrar la solicitud.*",
 
@@ -253,7 +253,7 @@
             "enableCustomColor":false,
             "color":"#ffffff",
 
-            "options":["spanish","english","rplace"],
+            "options":["rplace","spanish","english"],
             
             "other":{
                 "enableTicketExplaination":true,

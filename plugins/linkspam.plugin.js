@@ -11,7 +11,7 @@ const sendAlert = true;
 
 const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
 const unsafeUrlRegex = /http:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
-const whitelistLinks =["https://tenor.com/view/", "https://media.discordapp.net/attachments/"]
+const whitelistLinks =["https://tenor.com/view/", "https://media.discordapp.net/", "https://cdn.discordapp.com/"]
 
 /**
  * 
