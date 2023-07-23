@@ -1,7 +1,7 @@
 {
     "version":"1.0.0",
-    "enableAPIdebug":true,
-    "enableAPIconsolelogs":true,
+    "enableAPIdebug":false,
+    "enableAPIconsolelogs":false,
     "info":"If you turn these switches to true, then the feature will be turned OFF!",
     "info2":"You can use this to disable some features you don't want!",
     "disable":{
