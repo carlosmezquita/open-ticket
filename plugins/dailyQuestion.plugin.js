@@ -25,6 +25,9 @@ function sendRandomDailyQuestion(channel) {
     const randomIndex = Math.floor(Math.random() * questions.unread_questions.length);
     const randomQuestion = questions.unread_questions[randomIndex];
 
+    questions.current_id++
+    const questionId = questions.current_id
+
     channel.send({
         "content": `<@&${dailyPingID}>`,
         "embeds": [
@@ -41,10 +44,17 @@ function sendRandomDailyQuestion(channel) {
                 "title": randomQuestion
             }
         ]
-    });
+    }).then( message => {
+        message.startThread({
+            name: "Pregunta #"+questionId
+        })
+    });;
 
     questions.unread_questions.splice(randomIndex, 1);
-    questions.read_questions.push(randomQuestion);
+    questions.read_questions.push({
+        "id": questions.current_id,
+        "question": randomQuestion
+    });
     const jsonString = JSON.stringify(questions, null, 2);
 
     fs.writeFileSync(fileName, jsonString, "utf8");
