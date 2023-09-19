@@ -44,10 +44,11 @@ function sendRandomDailyQuestion(channel) {
                 "title": randomQuestion
             }
         ]
-    }).then( message => {
-        message.startThread({
-            name: "Pregunta #"+questionId
+    }).then(async message => {
+        const thread = await message.startThread({
+            name: "Pregunta - "+questionId
         })
+        thread.leave()
     });;
 
     questions.unread_questions.splice(randomIndex, 1);
