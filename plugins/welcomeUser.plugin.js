@@ -7,7 +7,7 @@ module.exports = () => {
   client.on(Events.GuildMemberAdd, async member => {
     
     const { user, guild } = member;
-    const username = (user.username + (user.discriminator === "0" ? "" : "#" + user.discriminator)).replace("_", "\\_");
+    const username = (user.username + (user.discriminator === "0" ? "" : "#" + user.discriminator)).replaceAll("_", "\\_");
 
     const welcomeEmbed = new EmbedBuilder()
       .setColor("#8386ff")
