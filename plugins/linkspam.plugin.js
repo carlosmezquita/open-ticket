@@ -158,8 +158,8 @@ module.exports = () => {
                 return;
         }
 
-        for (const role in whitelistRoles) {
-            if(message.member.roles.cache.has(role)) return;
+        for (const role of whitelistRoles) {
+            if (message.member.roles.cache.has(role)) return;
         }
         
         const alertsChannel = client.channels.cache.get('1079816654269194384');
