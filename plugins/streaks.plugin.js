@@ -21,8 +21,6 @@ function getDay(message) {
   const today = message.createdAt
   
   if (today.getHours() < 14 && today.getHours()) {
-    console.log(today.getDate());
-    console.log(today.getDate()-1);
     return today.setDate(today.getDate() - 1);
   } else {
     return today;
