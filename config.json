@@ -8,7 +8,10 @@
     "adminRoles":["960199533927727144"],
     "prefix":"!ticket ",
     "languageFile":"spanish",
-
+    "channels": {
+        "streaksChannel": "1237880894014885978",
+        "botChannel": "1118642257814360107"
+    },
     "status":{
         "enabled":true,
         "type":"PLAYING",
