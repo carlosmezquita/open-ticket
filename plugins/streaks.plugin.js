@@ -18,12 +18,13 @@ function getDateMidnightUnixTime(date) {
 }
 
 function getDay(message) {
-  const today = message.createdAt
-  
-  if (today.getHours() < 14 && today.getHours()) {
-    return today.setDate(today.getDate() - 1);
+  const msgDate = new Date(message.createdAt)
+  msgDate.setHours(msgDate.getHours() - new Date().getTimezoneOffset()/60)
+
+  if (msgDate.getHours() < 14) {
+    return msgDate.setDate(msgDate.getDate() - 1);
   } else {
-    return today;
+    return msgDate;
   }
 }
 
@@ -77,10 +78,9 @@ hasAnOngoingStreak = (message) => {
 
 
 module.exports = () => {
-    const {client} = api
+  const {client} = api
 
-    client.on(Events.MessageCreate, async (message) => {
-    
+  client.on(Events.MessageCreate, async (message) => {    
       if (message.author.bot ||
           message.channel.id !== config.channels.streaksChannel) {
               return;
