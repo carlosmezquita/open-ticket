@@ -17,10 +17,11 @@ function getDateMidnightUnixTime(date) {
   return Math.floor(date.getTime() / 1000);
 }
 
-function getDay(message) {
-  const msgDate = new Date(message.createdAt)
-  msgDate.setHours(msgDate.getHours() - new Date().getTimezoneOffset()/60)
 
+function getDay(date) {
+  const msgDate = new Date(date)
+  msgDate.setHours(msgDate.getHours() - new Date().getTimezoneOffset()/60)
+  
   if (msgDate.getHours() < 14) {
     return msgDate.setDate(msgDate.getDate() - 1);
   } else {
@@ -35,18 +36,18 @@ hasAnOngoingStreak = (message) => {
   if (!users) return
 
   let user = getUserId(users, message.author.id)
-  const today = getDateMidnightUnixTime(getDay(message))
+  const today = getDateMidnightUnixTime(getDay(message.createdAt))
 
   if (user) {
-    const lastMessageDate = getDateMidnightUnixTime(getDay(message));
+    const lastMessageDate = user.lastMessageDate;
 
-    if (lastMessageDate === user.lastMessageDate) {
+    if (today === lastMessageDate) {
       return;
     }
 
-    user.lastMessageDate = lastMessageDate;
+    user.lastMessageDate = today;
 
-    if (lastMessageDate && today - lastMessageDate <= 86400 ) {
+    if (today - lastMessageDate <= 86400) {
       user.streak++;
       message.react('🔥');
       api.client.channels.cache.get(config.channels.botChannel)
@@ -61,7 +62,7 @@ hasAnOngoingStreak = (message) => {
   } else {
     users.push({
       id: message.author.id,
-      lastMessageDate: getDateMidnightUnixTime(getDay(message)),
+      lastMessageDate: getDateMidnightUnixTime(getDay(message.createdAt)),
       streak: 1
     });
     api.client.channels.cache.get(config.channels.botChannel)
