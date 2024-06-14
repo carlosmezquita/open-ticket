@@ -1,4 +1,4 @@
-const { Events  } = require('discord.js');
+const { Events, MessageFlags  } = require('discord.js');
 const api = require("../core/api/api.js")
 const fs = require('fs');
 const { config } = require("../index.js")
@@ -50,11 +50,17 @@ hasAnOngoingStreak = (message) => {
       user.streak++;
       message.react('🔥');
       api.client.channels.cache.get(config.channels.botChannel)
-      .send(`La racha actual de ${message.author.toString()} es de ${user.streak} días.`);
+        .send({
+          content: `La racha actual de ${message.author.toString()} es de ${user.streak} días.`,
+          flags: [MessageFlags.SuppressNotifications]
+      } );
     } else {
       user.streak = 1;
       api.client.channels.cache.get(config.channels.botChannel)
-      .send(` ${message.author.toString()} ha empezado una nueva racha.`);
+        .send({
+          content: `${message.author.toString()} ha empezado una nueva racha.`,
+          flags: [MessageFlags.SuppressNotifications]
+      });
     }
     
 
@@ -65,7 +71,9 @@ hasAnOngoingStreak = (message) => {
       streak: 1
     });
     api.client.channels.cache.get(config.channels.botChannel)
-      .send(`¡Hola ${message.author.toString()}!\n\nHas empezado tu primera racha.\nPara mantenerla debes enviar un 'spaincraft' diario.\n\n¡Sigue así!`);
+      .send({
+        content: `¡Hola ${message.author.toString()}!\n\nHas empezado tu primera racha.\nPara mantenerla debes enviar un 'spaincraft' diario.\n\n¡Sigue así!`
+      });
   }
 
   const jsonString = JSON.stringify(users, null, 2);
