@@ -17,25 +17,24 @@ function getDateMidnightUnixTime(date) {
   return Math.floor(date.getTime() / 1000);
 }
 
-
 function getDay(date) {
-  const msgDate = new Date(date)
-  msgDate.setHours(msgDate.getHours() - new Date().getTimezoneOffset()/60)
+  const dateObj = new Date(date)
+  dateObj.setHours(dateObj.getHours() - new Date().getTimezoneOffset()/60)
   
-  if (msgDate.getHours() < 14) {
-    return msgDate.setDate(msgDate.getDate() - 1);
+  if (dateObj.getHours() < 14) {
+    return dateObj.setDate(dateObj.getDate() - 1);
   } else {
-    return msgDate;
+    return dateObj;
   }
 }
 
 hasAnOngoingStreak = (message) => {
   const filePath = './storage/streaks.json';
 
-  let users = JSON.parse(fs.readFileSync(filePath, "utf8"));;
+  const users = JSON.parse(fs.readFileSync(filePath, "utf8"));;
   if (!users) return
 
-  let user = getUserId(users, message.author.id)
+  const user = getUserId(users, message.author.id)
   const today = getDateMidnightUnixTime(getDay(message.createdAt))
 
   if (user) {
