@@ -46,7 +46,7 @@ hasAnOngoingStreak = (message) => {
 
     user.lastMessageDate = today;
 
-    if (today - lastMessageDate <= 86400) {
+    if (today - lastMessageDate <= 90000) {
       user.streak++;
       message.react('🔥');
       api.client.channels.cache.get(config.channels.botChannel)
