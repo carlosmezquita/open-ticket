@@ -9,13 +9,13 @@
     "prefix":"!ticket ",
     "languageFile":"spanish",
     "channels": {
-        "streaksChannel": "1237880894014885978",
-        "botChannel": "1118642257814360107"
+        "streaksChannel": "914557391067054081",
+        "botChannel": "688500549787713545"
     },
     "status":{
         "enabled":true,
         "type":"PLAYING",
-        "text":"!ticket help"
+        "text":"Spaincraftiano desde nacimiento"
     },
 
     "system":{
